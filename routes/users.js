@@ -49,11 +49,5 @@ router.post('/signin', (req, res) => {
     });
 });
 
-router.get("/allUsers", (req, res) => {
-    User.find().then(data => {
-        res.json({ allUsers: data })
-    })
-})
-
 
 module.exports = router;

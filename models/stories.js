@@ -1,24 +1,23 @@
 const mongoose = require('mongoose');
 
-const playerSchema = mongoose.Schema({
-    player: String,
-    playerDj: String
+const contextSchema = mongoose.Schema({ // Sous-document
+    initialStory: String,
+    players: [String],
+    onBoardingData: [String]
 })
 
-const systemSchema = mongoose.Schema({
+const storySchema = mongoose.Schema({ // Sous-document
     prompt: String,
     reponse: String,
     actions: [String]
 })
 
-const storySchema = mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
-    players: playerSchema,
-
-    // Déterminer quelles clefs mettre dans le sous-document "stories"
-    system: systemSchema
+const systemSchema = mongoose.Schema({ // Main Schema
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "users" }, // Clef étrangère
+    context: contextSchema,
+    story: storySchema
 });
 
-const Story = mongoose.model('stories', storySchema);
+const System = mongoose.model('system', systemSchema);
 
 module.exports = Story;
