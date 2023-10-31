@@ -1,23 +1,32 @@
 const mongoose = require('mongoose');
 
+const playerSchema = mongoose.Schema({ // Sous-document
+    name: String,
+    character: String
+})
+
 const contextSchema = mongoose.Schema({ // Sous-document
+    title: String,
     initialStory: String,
-    players: [String],
+    players: [playerSchema],
     onBoardingData: [String]
 })
 
-const storySchema = mongoose.Schema({ // Sous-document
-    prompt: String,
-    reponse: String,
-    actions: [String]
+const roundSchema = mongoose.Schema({ // Sous-document
+    turn: Number,
+    // player: [playerSchema], // ==> indiquer uniquement le dernier joueur à jouer ?
+    player: String,
+    story: String,
+    choices: [String],
+    action: String
 })
 
-const systemSchema = mongoose.Schema({ // Main Schema
+const storiesSchema = mongoose.Schema({ // Main Schema
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "users" }, // Clef étrangère
     context: contextSchema,
-    story: storySchema
+    story: [roundSchema]
 });
 
-const System = mongoose.model('system', systemSchema);
+const Stories = mongoose.model('stories', storiesSchema);
 
-module.exports = Story;
+module.exports = Stories;
