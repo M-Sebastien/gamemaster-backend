@@ -18,7 +18,7 @@ const roundSchema = mongoose.Schema({ // Sous-document
     player: String,
     story: String,
     choices: [String],
-    action: String
+    // action: String ==> to delete ?
 })
 
 const storiesSchema = mongoose.Schema({ // Main Schema

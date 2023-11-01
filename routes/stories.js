@@ -3,27 +3,37 @@ var router = express.Router();
 
 require("../models/connection");
 const Stories = require("../models/stories");
+const Users = require("../models/users");
 
-router.post("/saveStory", (req, res) => {
-    Stories.findOne({ token: req.params.token }).then(data => {
+// {
+//     "context": [{
+//       "title": "title",
+//       "initialStory": "ChatGPT generated story",
+//       "players": [
+//         {"name": "Thom", "character": "player1"},
+//         {"name": "Anso", "character": "player2"}
+//         ],
+//       "onBoardingData": ["answer1", "answer2", "answer3"]
+//     }],
+//     "story": [{
+//       "turn": "1",
+//       "player": "Thom",
+//       "story": "Last generated story",
+//       "choices": ["action1", "action2", "action3", "action4"]
+//     }]
+//   }
+
+router.post("/saveStory/:token", (req, res) => {
+    Users.findOne({ token: req.params.token }).then(data => {
         if (data) {
             const newStory = new Stories({
-                context: [{
-                    title: req.body.title,
-                    initialStory: req.body.initialStory,
-                    players: req.body.players,
-                    onBoardingData: req.body.onBoardingData
-                }],
-                story: [{
-                    turn: req.body.turn,
-                    player: req.body.player,
-                    story: req.body.story,
-                    choices: req.body.choices
-                }]
+                userId: data._id,
+                context: req.body.context,
+                story: req.body.story,
             })
 
             newStory.save().then(() => {
-                res.json({ result: true });
+                res.json({ result: true, newStory });
             });
         } else {
             res.json({ result: false, error: 'User not found' });
@@ -38,7 +48,9 @@ router.get("getStoriesByToken/:token", (req, res) => {
 })
 
 router.get("getStoryById", (req, res) => {
-    Stories.findById()
+    Stories.findById({ id: req.params.id }).then(data => {
+        res.json({ result: true, story: data })
+    })
 })
 
 router.put("modifyStory", (req, res) => {
