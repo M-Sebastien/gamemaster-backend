@@ -14,8 +14,7 @@ const contextSchema = mongoose.Schema({ // Sous-document
 
 const roundSchema = mongoose.Schema({ // Sous-document
     turn: Number,
-    // player: [playerSchema], // ==> indiquer uniquement le dernier joueur à jouer ?
-    player: String,
+    player: playerSchema,
     story: String,
     choices: [String],
     action: String
