@@ -31,14 +31,4 @@ router.get("/getStoriesByToken/:token", (req, res) => {
     })
 })
 
-router.get("/getStoryById/:id", (req, res) => {
-    Stories.findById({ id: req.params.id }).then(data => {
-        res.json({ result: true, story: data })
-    })
-})
-
-router.put("/modifyStory", (req, res) => {
-    Stories.updateOne()
-})
-
 module.exports = router;
