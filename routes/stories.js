@@ -41,19 +41,19 @@ router.post("/saveStory/:token", (req, res) => {
     })
 })
 
-router.get("getStoriesByToken/:token", (req, res) => {
-    Stories.find({ token: req.params.token }).then(data => {
+router.get("/getStoriesByToken/:token", (req, res) => {
+    Users.find({ token: req.params.token }).then(data => {
         res.json({ result: true, stories: data })
     })
 })
 
-router.get("getStoryById", (req, res) => {
+router.get("/getStoryById/:id", (req, res) => {
     Stories.findById({ id: req.params.id }).then(data => {
         res.json({ result: true, story: data })
     })
 })
 
-router.put("modifyStory", (req, res) => {
+router.put("/modifyStory", (req, res) => {
     Stories.updateOne()
 })
 
