@@ -47,9 +47,11 @@ router.post("/saveStory/:token", (req, res) => {
 //     })
 // })
 
-router.get("/getStoriesByUserId/:id", (req, res) => {
-    Stories.find({ userId: req.params.id }).then(data => {
-        res.json({ result: true, stories: data })
+router.get("/getStoriesByToken/:token", (req, res) => {
+    Users.findOne({ token: req.params.token }).then(user => {
+        Stories.find({ userId: user._id }).then(data => {
+            res.json({ result: true, stories: data })
+        })
     })
 })
 
