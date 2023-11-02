@@ -5,24 +5,6 @@ require("../models/connection");
 const Stories = require("../models/stories");
 const Users = require("../models/users");
 
-// {
-//     "context": [{
-//       "title": "title",
-//       "initialStory": "ChatGPT generated story",
-//       "players": [
-//         {"name": "Thom", "character": "player1"},
-//         {"name": "Anso", "character": "player2"}
-//         ],
-//       "onBoardingData": ["answer1", "answer2", "answer3"]
-//     }],
-//     "story": [{
-//       "turn": "1",
-//       "player": "Thom",
-//       "story": "Last generated story",
-//       "choices": ["action1", "action2", "action3", "action4"]
-//     }]
-//   }
-
 router.post("/saveStory/:token", (req, res) => {
     Users.findOne({ token: req.params.token }).then(data => {
         if (data) {
@@ -40,12 +22,6 @@ router.post("/saveStory/:token", (req, res) => {
         }
     })
 })
-
-// router.get("/getStoriesByToken/:token", (req, res) => {
-//     Users.find({ token: req.params.token }).then(data => {
-//         res.json({ result: true, stories: data })
-//     })
-// })
 
 router.get("/getStoriesByToken/:token", (req, res) => {
     Users.findOne({ token: req.params.token }).then(user => {
